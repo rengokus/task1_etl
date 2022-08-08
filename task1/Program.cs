@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using Topshelf;
 using System.Text.RegularExpressions;
-using task1.model;
 using System.Globalization;
 using System.Collections.Concurrent;
 using System.Text.Json;
@@ -24,7 +23,6 @@ namespace task1
                     s.ConstructUsing(service => new Main());
                     s.WhenStarted(service => service.Start());
                     s.WhenStopped(service => service.Stop());
-                    
                 });
 
                 x.RunAsLocalSystem();
