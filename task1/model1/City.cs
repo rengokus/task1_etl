@@ -16,17 +16,24 @@ namespace task1.model1
 
         public void Add(List<string> strings)
         {
-            string name = $"{strings[0]} {strings[1]}";
-            decimal payment = decimal.Parse(strings[^4].Replace('.', ','), new NumberFormatInfo { NumberDecimalSeparator = "," });
-            string service = strings[^1];
-            if (service.Equals(""))
+            try
             {
-                throw new FormatException();
+                string name = $"{strings[0]} {strings[1]}";
+                decimal payment = decimal.Parse(strings[^4].Replace('.', ','), new NumberFormatInfo { NumberDecimalSeparator = "," });
+                string service = strings[^1];
+                if (service.Equals(""))
+                {
+                    throw new FormatException();
+                }
+                long accountNumber = long.Parse(strings[^2]);
+                DateTime date = DateTime.ParseExact(strings[^3], "yyyy-dd-MM", null);
+                Services.TryAdd(service, new Service1(service));
+                Services[service].Add(new Payer1(name, payment, date, accountNumber));
             }
-            long accountNumber = long.Parse(strings[^2]);
-            DateTime date = DateTime.ParseExact(strings[^3], "yyyy-dd-MM", null);
-            Services.TryAdd(service, new Service1(service));
-            Services[service].Add(new Payer1(name, payment, date, accountNumber));
+            catch (FormatException)
+            {
+                throw;
+            }
         }
     }
 }
